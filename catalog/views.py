@@ -17,11 +17,16 @@ def index(request):
     # The 'all()' is implied by default.
     num_authors = Author.objects.count()
 
+    # TEST SEGUNDA SEMANA
+    # All genres of books
+    genres = Genre.objects.values_list('name', flat=True)
+
     # Genres and books with a specific word
     genres_word = 'Fiction'
     num_genres_word = Genre.objects.filter(name__icontains=genres_word).count()
 
-    books_word = 'the'
+    # PONER 'a' PARA LOS TESTS SEGUNDA SEMANA
+    books_word = 'a'
     num_books_word = Book.objects.filter(title__icontains=books_word).count()
 
     context = {
@@ -29,6 +34,7 @@ def index(request):
         'num_instances': num_instances,
         'num_instances_available': num_instances_available,
         'num_authors': num_authors,
+        'genres': genres,
         'genres_word': genres_word,
         'num_genres_word': num_genres_word,
         'books_word': books_word,
@@ -42,9 +48,18 @@ def index(request):
 class BookListView(generic.ListView):
     model = Book
     context_object_name = 'book_list'
-    paginate_by = 10
+    paginate_by = 2
 
 class BookDetailView(generic.DetailView):
     model = Book
     context_object_name = 'book'
+
+class AuthorListView(generic.ListView):
+    model = Author
+    context_object_name = 'author_list'
+    paginate_by = 10
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+    context_object_name = 'author'
 

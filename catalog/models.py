@@ -2,10 +2,11 @@ from django.db import models
 from django.db.models import UniqueConstraint  # Constrains fields to unique values
 from django.db.models.functions import Lower  # Returns lower cased value of field
 
-# Create your models here.
 from django.urls import (
     reverse,  # Used in get_absolute_url() to get URL for specified ID
 )
+
+import uuid  # Required for unique book instances
 
 
 class Genre(models.Model):
@@ -60,6 +61,10 @@ class Book(models.Model):
 
     language = models.ForeignKey("Language", on_delete=models.SET_NULL, null=True)
 
+    # AÑADIR ORDENAR LOS LIBROS ALFABETICAMENTE POR TITULO PARA LOS TESTS SEMANA 2
+    class Meta:
+        ordering = ["title"]
+
     def __str__(self):
         """String for representing the Model object."""
         return self.title
@@ -73,9 +78,6 @@ class Book(models.Model):
         return ", ".join(genre.name for genre in self.genre.all()[:3])
 
     display_genre.short_description = "Genre"
-
-
-import uuid  # Required for unique book instances
 
 
 class BookInstance(models.Model):

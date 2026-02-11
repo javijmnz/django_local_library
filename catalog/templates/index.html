@@ -17,7 +17,10 @@
     <li><strong>Copies:</strong> {{ num_instances }}</li>
     <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
     <li><strong>Authors:</strong> {{ num_authors }}</li>
-    <li><strong>Genres with the word "{{genres_word }}":</strong> {{ num_genres_word }}</li>
-    <li><strong>Books with the word "{{books_word }}":</strong> {{ num_books_word }}</li>
+    <li><strong>Genres:</strong> {{ genres|join:", " }}</li>
+    <li><strong>Genres with the word "{{ genres_word }}":</strong> {{ num_genres_word }}</li>
+    <li><strong>Books containing the letter '{{ books_word }}' in the title:</strong> {{ num_books_word }}</li>
   </ul>
 {% endblock %}
+
+<!--<li><strong>Books with the word "{{books_word }}":</strong> {{ num_books_word }}</li>-->>

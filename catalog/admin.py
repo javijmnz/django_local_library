@@ -9,9 +9,10 @@ admin.site.register(Genre)
 # admin.site.register(BookInstance)
 admin.site.register(Language)
 
-
-class BookInline(admin.StackedInline):
+# PARA LOS TESTS TIENE QUE ESTAR EN PLURAL EL NOMBRE!!!!!!!!!!!
+class BooksInline(admin.StackedInline):
     model = Book
+    extra = 0
 
 
 # Define the admin class
@@ -20,7 +21,7 @@ class AuthorAdmin(admin.ModelAdmin):
     # SUS: si quitamos first_name y last_name podemos añadir autores solo con fechas, cuando en verdad estos campos son null=False...
     fields = ["first_name", "last_name", ("date_of_birth", "date_of_death")]
 
-    inlines = [BookInline]
+    inlines = [BooksInline]
 
 
 # Register the admin class with the associated model
@@ -44,7 +45,7 @@ class BookAdmin(admin.ModelAdmin):
 # Register the Admin classes for BookInstance using the decorator
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ("id", "book", "status", "due_back")
+    list_display = ("book", "status", "due_back", "id")
 
     list_filter = ("status", "due_back")
 

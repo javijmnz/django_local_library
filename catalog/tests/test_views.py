@@ -424,8 +424,34 @@ class AuthorCreateViewTest(TestCase):
             response.context["form"], "first_name", "This field is required."
         )
 
-    def test_logged_in_uses_correct_template(self):
+    def test_uses_correct_template(self):
         login = self.client.login(username="test_user1", password="some_password1")
         response = self.client.get(reverse("author-create"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "catalog/author_form.html")
+
+    
+    def test_logged_in_with_permission(self):
+        login = self.client.login(username='test_user1', password='some_password1')
+        response = self.client.get(reverse('author-create'))
+        self.assertEqual(response.status_code, 200)
+
+    
+    def test_form_date_of_death_initially_set_to_expected_date(self):
+        login = self.client.login(username='test_user1', password='some_password1')
+        response = self.client.get(reverse('author-create'))
+        self.assertEqual(response.status_code, 200)
+
+        expected_initial_date = datetime.date(2023, 11, 11)
+        response_date = response.context['form'].initial['date_of_death']
+        response_date = datetime.datetime.strptime(
+            response_date, "%d/%m/%Y").date()
+        self.assertEqual(response_date, expected_initial_date)
+
+    def test_redirects_to_detail_view_on_success(self):
+        login = self.client.login(username='test_user1', password='some_password1')
+        response = self.client.post(reverse('author-create'),
+                                    {'first_name': 'Christian Name', 'last_name': 'Surname'})
+        # Manually check redirect because we don't know what author was created
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith('/catalog/author/'))

@@ -27,10 +27,9 @@ load_dotenv(env_path)
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-DEBUG = 'RENDER' not in os.environ
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['p1-07-2401-2026-1.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition

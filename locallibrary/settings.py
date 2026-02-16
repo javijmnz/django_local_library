@@ -11,25 +11,27 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
-import dj_database_url
 from pathlib import Path
+
+import dj_database_url
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env_path = load_dotenv(os.path.join(BASE_DIR, '.env'))
+env_path = load_dotenv(os.path.join(BASE_DIR, ".env"))
 load_dotenv(env_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+# DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = "RENDER" not in os.environ
 
-ALLOWED_HOSTS = ['p1-07-2401-2026-1.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["p1-07-2401-2026-1.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -42,12 +44,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "catalog.apps.CatalogConfig",
-    'django_extensions',
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -86,24 +88,26 @@ DATABASES = {
     )
 }
 
-if 'DATABASE_URL' in os.environ:
+if "DATABASE_URL" in os.environ:
     DATABASES = {
-    "default": dj_database_url.config(
-        conn_max_age=500,
-        conn_health_checks=True,
-    )
-}
+        "default": dj_database_url.config(
+            conn_max_age=500,
+            conn_health_checks=True,
+        )
+    }
 # To use local PostgreSQL and run the tests, just export TESTING=1
 # To use NEON, just unset TESTING
 # To see the current value of TESTING just type echo $TESTING
-if 'TESTING' in os.environ:
-    db_from_env = dj_database_url.config(default=os.environ.get('POSTGRESQL_URL'),
-    conn_max_age=500)
+if "TESTING" in os.environ:
+    db_from_env = dj_database_url.config(
+        default=os.environ.get("POSTGRESQL_URL"), conn_max_age=500
+    )
 else:
-    db_from_env = dj_database_url.config(default=os.environ.get('NEON_URL'),
-    conn_max_age=500)
+    db_from_env = dj_database_url.config(
+        default=os.environ.get("NEON_URL"), conn_max_age=500
+    )
 
-DATABASES['default'].update(db_from_env)
+DATABASES["default"].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -140,10 +144,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # The URL to use when referring to static files (where they will be served from)
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -156,7 +160,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Static file serving.
 # https://whitenoise.readthedocs.io/en/stable/django.html#add-compression-and-caching-support
-DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 STORAGES = {
     # ...
     "staticfiles": {

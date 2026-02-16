@@ -26,7 +26,6 @@ def index(request):
     # The 'all()' is implied by default.
     num_authors = Author.objects.count()
 
-    # TEST SEGUNDA SEMANA
     # All genres of books
     num_genres = Genre.objects.all().count()
 
@@ -34,7 +33,6 @@ def index(request):
     genres_word = "Fiction"
     num_genres_word = Genre.objects.filter(name__icontains=genres_word).count()
 
-    # PONER 'a' PARA LOS TESTS SEGUNDA SEMANA
     books_word = "a"
     num_books_word = Book.objects.filter(title__icontains=books_word).count()
 

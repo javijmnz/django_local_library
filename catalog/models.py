@@ -62,7 +62,6 @@ class Book(models.Model):
 
     language = models.ForeignKey("Language", on_delete=models.SET_NULL, null=True)
 
-    # AÑADIR ORDENAR LOS LIBROS ALFABETICAMENTE POR TITULO PARA LOS TESTS SEMANA 2
     class Meta:
         ordering = ["title"]
 

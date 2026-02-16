@@ -10,7 +10,6 @@ admin.site.register(Genre)
 admin.site.register(Language)
 
 
-# PARA LOS TESTS TIENE QUE ESTAR EN PLURAL EL NOMBRE!!!!!!!!!!!
 class BooksInline(admin.StackedInline):
     model = Book
     extra = 0
@@ -19,7 +18,6 @@ class BooksInline(admin.StackedInline):
 # Define the admin class
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ("last_name", "first_name", "date_of_birth", "date_of_death")
-    # SUS: si quitamos first_name y last_name podemos añadir autores solo con fechas, cuando en verdad estos campos son null=False...
     fields = ["first_name", "last_name", ("date_of_birth", "date_of_death")]
 
     inlines = [BooksInline]

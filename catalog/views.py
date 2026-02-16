@@ -1,7 +1,10 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import (
+    LoginRequiredMixin,
+    PermissionRequiredMixin,
+)
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
@@ -21,7 +24,9 @@ def index(request):
     num_instances = BookInstance.objects.all().count()
 
     # Available books (status = 'a')
-    num_instances_available = BookInstance.objects.filter(status__exact="a").count()
+    num_instances_available = BookInstance.objects.filter(
+        status__exact="a"
+    ).count()
 
     # The 'all()' is implied by default.
     num_authors = Author.objects.count()
@@ -105,7 +110,9 @@ class LoanedBooksListView(PermissionRequiredMixin, generic.ListView):
     permission_required = "catalog.can_mark_returned"
 
     def get_queryset(self):
-        return BookInstance.objects.filter(status__exact="o").order_by("due_back")
+        return BookInstance.objects.filter(status__exact="o").order_by(
+            "due_back"
+        )
 
 
 @login_required
@@ -116,12 +123,14 @@ def renew_book_librarian(request, pk):
 
     # If this is a POST request then process the Form data
     if request.method == "POST":
-        # Create a form instance and populate it with data from the request (binding):
+        # Create a form instance and populate it with data from the request
+        # (binding):
         form = RenewBookForm(request.POST)
 
         # Check if the form is valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
+            # process the data in form.cleaned_data as required
+            # (here we just write it to the model due_back field)
             book_instance.due_back = form.cleaned_data["renewal_date"]
             book_instance.save()
 
@@ -130,7 +139,9 @@ def renew_book_librarian(request, pk):
 
     # If this is a GET (or any other method) create the default form.
     else:
-        proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+        proposed_renewal_date = datetime.date.today() + datetime.timedelta(
+            weeks=3
+        )
         form = RenewBookForm(initial={"renewal_date": proposed_renewal_date})
 
     context = {

@@ -30,7 +30,9 @@ class ModelsTest(TestCase):
 
     def test_genre_get_absolute_url(self):
         genre = Genre.objects.first()
-        self.assertEqual(genre.get_absolute_url(), "/catalog/genre/" + str(genre.id))
+        self.assertEqual(
+            genre.get_absolute_url(), "/catalog/genre/" + str(genre.id)
+        )
 
     def test_book_display_genre(self):
         genre = Genre.objects.first()
@@ -45,14 +47,17 @@ class ModelsTest(TestCase):
     def test_language_get_absolute_url(self):
         language = Language.objects.first()
         self.assertEqual(
-            language.get_absolute_url(), "/catalog/language/" + str(language.id)
+            language.get_absolute_url(),
+            "/catalog/language/" + str(language.id),
         )
 
 
 class ViewsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        user = User.objects.create_user(username="testuser", password="testpassword")
+        user = User.objects.create_user(
+            username="testuser", password="testpassword"
+        )
         Author.objects.create(first_name="Big", last_name="Bob")
         Book.objects.create(
             title="Test Book",
@@ -76,14 +81,14 @@ class ViewsTest(TestCase):
         user.user_permissions.add(permDeleteBook)
 
     def test_author_delete_form_valid(self):
-        login = self.client.login(username="testuser", password="testpassword")
+        self.client.login(username="testuser", password="testpassword")
         author = Author.objects.first()
         response = self.client.post(f"/catalog/author/{author.id}/delete/")
         self.assertRedirects(response, "/catalog/authors/")
         self.assertFalse(Author.objects.filter(id=author.id).exists())
 
     def test_book_delete_form_valid(self):
-        login = self.client.login(username="testuser", password="testpassword")
+        self.client.login(username="testuser", password="testpassword")
         book = Book.objects.first()
         response = self.client.post(f"/catalog/book/{book.id}/delete/")
         self.assertRedirects(response, "/catalog/books/")

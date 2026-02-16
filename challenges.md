@@ -36,7 +36,8 @@ El challenge consiste en crear formularios y vistas para editar `Book`s, de form
 El challenge consiste en programar tests unitarios para la vista `AuthorCreateView`. Para ello, en el fichero `catalog/test/test_views.py` creamos una clase `AuthorCreateViewTest` que hereda de `TestCase` con los siguientes métodos:
 - `test_redirect_if_not_logged_in`: Comprueba que se impide el solicita el inicio de sesión si no se ha hecho antes.
 - `test_forbidden_if_logged_in_but_not_correct_permission`: Comprueba que se impide el acceso si no se tiene permiso para crear autores.
-- `test_form_date_of_death_initially_has_date_11_11_2023`: Comprueba que la fecha de muerte mostrada inicialmente en el formulario es el 11/11/2023.
-- `test_redirects_to_author_detail_on_success`: Comprueba que se redirige a la página de detalles del autor recién creado en caso de que la operación funcione.
+- `test_form_date_of_death_initially_set_to_expected_date`: Comprueba que la fecha de muerte mostrada inicialmente en el formulario es el 11/11/2023.
+- `test_redirects_to_detail_view_on_success`: Comprueba que se redirige a la página de detalles del autor recién creado en caso de que la operación funcione.
+- `test_uses_correct_template`: Comprueba que la vista utiliza la plantilla `catalog/author_form.html` como corresponde.
+- `test_logged_in_with_permission`: Comprueba que un usuario con permiso para crear autores, puede acceder a la página correspondiente.
 - `test_error_if_first_name_missing`: Comprueba que la operación falla si falta el campo del nombre, que es obligatorio.
-- `test_logged_in_uses_correct_template`: Comprueba que la vista utiliza la plantilla `catalog/author_form.html` como corresponde.

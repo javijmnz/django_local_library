@@ -10,7 +10,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from catalog.forms import RenewBookForm
 
-from .models import Author, Book, BookInstance, Genre
+from .models import Author, Book, BookInstance, Genre, Language
 
 
 def index(request):
@@ -198,3 +198,14 @@ class BookDelete(PermissionRequiredMixin, DeleteView):
             return HttpResponseRedirect(
                 reverse("book-delete", kwargs={"pk": self.object.pk})
             )
+
+
+# Classes created for test coverage
+class GenreDetailView(generic.DetailView):
+    model = Genre
+    context_object_name = "genre"
+
+
+class LanguageDetailView(generic.DetailView):
+    model = Language
+    context_object_name = "language"
